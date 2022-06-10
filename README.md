@@ -10,13 +10,7 @@ npm install react-native-audio-bitstream
 
 ## Usage
 
-```js
-import { multiply } from "react-native-audio-bitstream";
-
-// ...
-
-const result = await multiply(3, 7);
-```
+TODO
 
 ## Contributing
 
