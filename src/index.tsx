@@ -1,3 +1,4 @@
+import { useCallback, useRef } from 'react';
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
@@ -17,6 +18,18 @@ const AudioBitstream = NativeModules.AudioBitstream
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return AudioBitstream.multiply(a, b);
-}
+export type FFTData = {
+  bins: number[];
+};
+
+export const play = (url: string) => {
+  return AudioBitstream.play(url);
+};
+
+export const pause = () => {
+  return AudioBitstream.pause();
+};
+
+export const stop = () => {
+  return AudioBitstream.stop();
+};

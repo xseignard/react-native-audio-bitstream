@@ -1,18 +1,35 @@
-import * as React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-audio-bitstream';
+import { FFTData, play, stop } from 'react-native-audio-bitstream';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const started = useRef(false);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  useEffect(() => {
+    play(
+      'https://www.datocms-assets.com/46765/1623778309-unlocking-self-confidence-session-3.mp3'
+    );
+    const interval = setInterval(() => {
+      // @ts-expect-error iterate on API
+      if (global.setAudioCallback && !started.current) {
+        // @ts-expect-error iterate on API
+        global.setAudioCallback((sample: FFTData) => {
+          console.log(sample.bins.length);
+        });
+        started.current = true;
+      }
+    }, 100);
+
+    return () => {
+      if (interval) clearInterval(interval);
+      stop();
+    };
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>test</Text>
     </View>
   );
 }
